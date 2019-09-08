@@ -2,20 +2,17 @@
     <div>
         <router-linka></router-linka>
         <div id="bb">
-             <waiting v-if="objm.length<=0"></waiting>
-            <div v-else>
-                <pheader title="影院热映" href="#"></pheader>
-                <lunbo  :movieObj="objm[0]"></lunbo>
-                <pheader title="免费在线观影" href="#"></pheader>
-                <lunbo  :movieObj="objm[1]"></lunbo>
-                <pheader title="新片速递" href="#"></pheader>
-                <lunbo   :movieObj="objm[2]"></lunbo>
-                <pheader title="发现好电影" href="#"></pheader>
-                <goodmovie :findgoodmovie='goodmovie'></goodmovie>
-                <pheader title="分类浏览" href=""></pheader>
-                <liulan :objfl="objfenlei"></liulan>
-                <foot></foot>
-            </div>
+            <pheader title="最受关注图书|虚构类" href="#"></pheader>
+             <lunbo  :movieObj="objm[0]"></lunbo>
+             <pheader title="最受关注图书|非虚构类" href="#"></pheader>
+            <lunbo  :movieObj="objm[1]"></lunbo>
+             <pheader title="豆瓣纸书" href="#"></pheader>
+            <lunbo   :movieObj="objm[2]"></lunbo>
+            <pheader title="发现好书" href="#"></pheader>
+            <goodmovie :findgoodmovie='goodbook'></goodmovie>
+            <pheader title="分类浏览" href=""></pheader>
+            <liulan :objfl="objfenlei"></liulan>
+            <foot></foot>
         </div>
        
     </div>
@@ -27,14 +24,13 @@ import pheader from "../components/pheader"
 import goodmovie from "../components/goodmovie"
 import liulan from "../components/liulan"
 import foot from "../components/foot"
-import waiting from "../components/waiting"
 
 
 export default {
     data(){
         return{
             objm:[],
-            goodmovie:[],
+            goodbook:[],
             objfenlei:[
                 {wz:"经典"},
                 {wz:"冷门佳片"},
@@ -54,7 +50,6 @@ export default {
                  {wz:"韩国"},
                  {wz:"日本"}
             ]
-
         }
     },
     components:{
@@ -63,8 +58,7 @@ export default {
         pheader,
         goodmovie,
         liulan,
-        foot,
-        waiting
+        foot
     },
     created() {
         this.axios({
@@ -72,14 +66,16 @@ export default {
             url:"/movie",
         }).then((ok)=>{
             this.objm=ok.data.movie;
+             console.log(this.objm)
         },(err)=>{
            
         }),
         this.axios({
             method:"get",
-            url:"/findgoodmovie",
+            url:"/goodbook",
         }).then((ok)=>{
-            this.goodmovie=ok.data;
+            console.log(ok)
+            this.goodbook=ok.data;
         },(err)=>{
             console.log(err) 
         })

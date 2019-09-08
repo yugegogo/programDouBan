@@ -23,20 +23,30 @@
                     <a href="http://localhost:8080/#/zhuce">注册豆瓣账号</a> 
                     <a href="#">下载豆瓣App</a>
                 </p>
-                <p class="thshi">{{timetxt}}</p>
+                <div :class="messhow?'show':'notshow'">
+                    <p v-if="mes.length>0" class="thshi">{{timetxt}}</p>
+                    <waiting v-else></waiting>
+                </div>
+                
             </div>
         </div>
        
     </div>
 </template>
 <script>
+import waiting from "../components/waiting"
 export default {
+    components:{
+        waiting
+    },
     data(){
         return{
             psw:"",
             pswshow:false,
             email:'',
-            timetxt:""
+            timetxt:"",
+            mes:'',
+            messhow:false
         }
     },
     methods:{
@@ -47,33 +57,38 @@ export default {
             this.pswshow=!this.pswshow;
         },
         login(){
-            var params=new URLSearchParams();
-            params.append("psw",this.psw);
-            params.append("email",this.email);
-            this.axios({
-                method:"post",
-                url:"http://localhost:3000/login",
-                data:params
-            }).then((ok)=>{
-                console.log(ok);
-                 if(ok.data.linkId==3){
-                    var i=5;
-                    setInterval(()=>{
-                        i--;
-                        if(i==0){
-                            window.location.href="http://localhost:8080/#/shouye";
-                        }
-                       this.timetxt='登录成功，'+i+'秒后自动跳转到首页'
+                if(this.psw!=''&&this.email!=''){
+                this.messhow=true;
+                var params=new URLSearchParams();
+                params.append("psw",this.psw);
+                params.append("email",this.email);
+                this.axios({
+                    method:"post",
+                    url:"http://localhost:3000/login",
+                    data:params
+                }).then((ok)=>{
+                    console.log(ok);
+                    this.mes=ok.statusText;
+                    if(ok.data.linkId==3){
+                        var i=5;
+                        setInterval(()=>{
+                            i--;
+                            if(i==0){
+                                window.location.href="http://localhost:8080/#/shouye";
+                            }
+                        this.timetxt='登录成功，'+i+'秒后自动跳转到首页'
 
-                    },1000)
-                }else if(ok.data.linkId==2){
-                    this.timetxt='登录失败，账号密码不匹配'
-                }
-            },(err)=>{
-                this.timetxt='请求超时，请稍后再试'
-            })
+                        },1000)
+                    }else if(ok.data.linkId==2){
+                        this.timetxt='登录失败，账号密码不匹配'
+                    }
+                },(err)=>{
+                    this.timetxt='请求超时，请稍后再试'
+                })
+            }else{
+                alert("内容不能为空")
+            }
         }
-        
     },
     
 
@@ -188,14 +203,18 @@ button{
  .footer p:nth-of-type(2) a{
      color:#42bd56;
  }
- .thshi{
+  .footer div .thshi{
         color:red;
         font-size:0.14rem;
         margin-top:0.2rem;
         text-align: center;
-    
  }
- 
-
+.show{
+     display:block;
+     
+ }
+.notshow{
+    display: none;
+}
 
 </style>

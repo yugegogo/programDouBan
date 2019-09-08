@@ -7,8 +7,8 @@
             <router-link to="/movie">电影</router-link>
             <router-link to="book">图书</router-link>
             <router-link to="/radio">广播</router-link>
-            <router-link to="/team">小组</router-link>
-            <router-link to="/daohang">导航</router-link>
+            <router-link to="/xiaozu">小组</router-link>
+            <router-link class="el-icon-s-operation" to="/daohang"></router-link>
         </p>
     </div>
 </template>
@@ -23,12 +23,14 @@ export default {
     top:0;
     left: 0;
     background:white;
+    width:100%;
+    z-index: 99;
 }
 div{
-    width:100%;
-    height:0.29rem;
-    line-height:0.29rem;
+    height:0.58rem;
+    line-height:0.58rem;
     border-bottom:1px solid #f3f3f3;
+    padding:0 0.1rem;
 }
 #pOne{
     font-size:0.2rem;
@@ -63,7 +65,8 @@ div{
 }
 #pTwo a:nth-of-type(5){
     color:#00b600;
-    padding-right:0;
+    font-size:0.2rem;
+    margin-right:0.1rem;
 }
 
 

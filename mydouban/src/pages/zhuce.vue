@@ -12,54 +12,72 @@
         <span>点击「注册」代表你已阅读并同意用户使用协议</span>
         <br>
         <a href="#">下载豆瓣App</a>
-        <p >{{ timetxt}}</p>
+        <div :class="messhow?'show':'notshow'">
+            <p v-if="mes.length>0" class="thshi">{{timetxt}}</p>
+            <waiting v-else></waiting>
+        </div>
     </div>
 </template>
+
 <script>
+import waiting from "../components/waiting"
+
 export default {
+    components:{
+        waiting
+    },
     data(){
        return{
             email:'',
             psw:"",
             uname:"",
-            timetxt:''
+            timetxt:'',
+            mes:'',
+            messhow:false
        }
     },
     methods:{
         tijiao(){
-            this.axios({
-                method:"get",
-                url:"http://localhost:3000/zhuce",
-                params:{
-                    email:this.email,
-                    psw:this.psw,
-                    uname:this.uname
-                },
-                // before(request){
-                //     alert("hhh")
-                //     this.timetxt=<img src="../../static/img/waiting.gif"/>;
-                // }
-            }).then((ok)=>{
-                console.log(ok.data)
-                if(ok.data.linkId==1){
-                     this.timetxt='注册成功'
-                        var i=5;
-                    setInterval(()=>{
-                        i--;
-                        if(i==0){
-                           window.location.href="http://localhost:8080/#/login";
-                        }
-                        this.timetxt=i+'秒后自动跳转到登录页'
-                    },1000) 
-                }else if(ok.data.linkId==0){
-                    this.timetxt='注册失败'
-                }else if(ok.data.linkId==5){
-                    this.timetxt='注册失败，该邮箱已被使用，请登录或重新注册'
-                }
-            },(err)=>{
-                this.timetxt='请求超时，请稍后再试'
-            })
-        }
+            if(this.psw!=''&&this.email!=''&&this.uname!=''){
+                 this.messhow=true;
+                this.axios({
+                    method:"get",
+                    url:"http://localhost:3000/zhuce",
+                    params:{
+                        email:this.email,
+                        psw:this.psw,
+                        uname:this.uname
+                    },
+                    // before(request){
+                    //     alert("hhh")
+                    //     this.timetxt=<img src="../../static/img/waiting.gif"/>;
+                    // }
+                }).then((ok)=>{
+                    console.log(ok.data)
+                    this.mes=ok.statusText;
+                    if(ok.data.linkId==1){
+                        this.timetxt='注册成功'
+                            var i=5;
+                        setInterval(()=>{
+                            i--;
+                            if(i==0){
+                            window.location.href="http://localhost:8080/#/login";
+                            }
+                            this.timetxt=i+'秒后自动跳转到登录页'
+                        },1000) 
+                    }else if(ok.data.linkId==0){
+                        this.timetxt='注册失败'
+                    }else if(ok.data.linkId==5){
+                        this.timetxt='注册失败，该邮箱已被使用，请登录或重新注册'
+                    }
+                },(err)=>{
+                    this.timetxt='请求超时，请稍后再试'
+                })
+            }else{
+                alert("内容不能为空")
+            }
+
+         }
     }
     
 }
@@ -103,4 +121,12 @@ export default {
         font-size:0.14rem;
         margin-top:0.2rem;
     }
+    .show{
+     display:block;
+     
+ }
+.notshow{
+    display: none;
+}
+
 </style>

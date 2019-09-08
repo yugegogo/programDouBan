@@ -1,28 +1,30 @@
 <template>
-    <div  class="container">
-        
-        <ul>
-            <li v-for="(v,i) in movieObj" :key="i">
-                <img :src="v.img">
-                <h5>{{v.movieName}}</h5>
-                <p v-if="v.num">星星星星星<span>{{v.num}}</span></p>
-                <p v-else>暂无评分</p>
-            </li>
-           
-        </ul>
-    </div>
+<ul>
+        <li v-for="(v,i) in movieObj" :key="i" >
+            <img :src="v.img">
+            <h5>{{v.movieName}}</h5>
+            <p v-if="v.num">
+                <el-rate v-model="value"  disabled  text-color="#ff9900" score-template="{value}">
+                </el-rate>
+                <span>{{v.num}}</span></p>
+            <p v-else>暂无评分</p>
+        </li>
+</ul>
 </template>
 <script>
 
 export default {
+    data(){
+        return{
+            value:'',
+        }
+    },
     props:{
-        
         movieObj:{
             type:Array,
             required:true
-        }
-    }
-    
+        },
+    },
 }
 </script>
 <style scoped>

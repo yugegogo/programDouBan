@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div id="ss" class="container">
+        <div id="ss" >
             <span  id='close' @click="close()">关闭</span>
             <input v-if="inputstate" autofocus @blur="transb()" type="text" v-model="inputvalue">
-            <p @click="transa()" v-else><span>放大镜</span></p>
+            <p @click="transa()" v-else><span class="el-icon-search"></span></p>
         </div>
        <ul>
            <li v-for="(v,i) in routerLista" :key='i'>
@@ -36,9 +36,9 @@ export default {
            routerLista:[
                {item:"电影",describe:"影院热映",for:"/movie",color:"#2384e8"},
                {item:"电视",describe:"正在热播",for:"/dianshi",color:"#8e6add"},
-               {item:"图书",describe:"畅销排行",for:"/books",color:"#9f7860"},
+               {item:"图书",describe:"畅销排行",for:"/book",color:"#9f7860"},
                {item:"同城",describe:"周末活动",for:"/city",color:"#e6467e"},
-               {item:"小组",describe:"志趣相投",for:"/team",color:"#2ab8cc"},
+               {item:"小组",describe:"志趣相投",for:"/xiaozu",color:"#2ab8cc"},
                {item:"音乐",describe:"新碟榜",for:"/music",color:"#f48f2e"},
                {item:"阅读",describe:"电子书",for:"/read",color:"#9f7860"},
                {item:"游戏",describe:"虚拟世界",for:"/games",color:"#5774c5"},
@@ -75,10 +75,12 @@ export default {
     line-height:0.49rem;
     border-bottom:1px solid #e3e3e3;
     display:flex;
+    
 }
 #close{
     font-size:0.16rem;
     color:#42bd56;
+    margin-left:0.2rem;
 }
 #ss p,input{
     width:2.97rem;

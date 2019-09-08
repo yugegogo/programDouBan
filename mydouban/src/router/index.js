@@ -5,6 +5,12 @@ import login from "../pages/login"
 import zhuce from "../pages/zhuce"
 import daohang from "../pages/daohang"
 import movie  from '../pages/movie'
+import book from '../pages/book'
+import xiaozu from "../pages/xiaozu"
+import radio from "../pages/radio"
+
+
+
 
 Vue.use(Router)
 
@@ -35,5 +41,20 @@ export default new Router({
       name: 'movie',
       component:movie
     },
+    {
+      path: '/book',
+      name: 'book',
+      component:book
+    },
+    {
+      path: '/xiaozu',
+      name: 'xiaozu',
+      component:xiaozu
+    },
+    {
+      path: '/radio',
+      name: 'radio',
+      component:radio
+    }
   ]
 })

@@ -5,7 +5,8 @@
             </div>
             <div id="bb">
                 <router-linkc></router-linkc>
-                 <movie-items :itemObj="objMovie"></movie-items>
+                <waiting v-if="objMovie.length==0"></waiting>
+                 <movie-items v-else :itemObj="objMovie"></movie-items>
             </div>
         </div>
 </template>
@@ -13,6 +14,8 @@
 import routerLinkc from "../components/routerLinkc"
 import routerLinka from "../components/routerLinka"
 import movieItems from "../components/movieItems"
+import waiting from "../components/waiting"
+
 
 export default {
     data(){
@@ -23,7 +26,8 @@ export default {
     components:{
         routerLinka,
         routerLinkc,
-        movieItems
+        movieItems,
+        waiting
     },
     created(){
          //判断是否登录
@@ -50,7 +54,7 @@ export default {
             
         },(err)=>{
             console.log(err)
-            //  alert("请求超时，请稍后再试")
+             alert("请求超时，请稍后再试")
         })
     }
 
@@ -61,7 +65,7 @@ export default {
 </script>
 <style scoped>
 #bb{
-    margin-top:0.29rem;
+    margin-top:0.8rem;
 }
 
 

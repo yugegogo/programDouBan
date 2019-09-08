@@ -1,5 +1,5 @@
 <template>
-    <div id="header" class="container">
+    <div id="header" >
             <span>{{title}}</span>
             <a v-if="href!=''" :href="href">更多</a>
     </div>
@@ -25,6 +25,7 @@ export default {
     font-size:0.16rem;
     margin:0 auto;
     line-height:0.5rem;
+   
 }
 #header span{
     float:left;
